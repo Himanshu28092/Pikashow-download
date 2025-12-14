@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PikaShow - Download Latest Version</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: linear-gradient(to bottom, #1a0000, #000);
+            border: 2px solid #ffcc00;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+            text-align: center;
+        }
+        
+        .logo-container {
+            margin-bottom: 25px;
+        }
+        
+        .logo {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            border-radius: 10px;
+            border: 3px solid #ff0000;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.4);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            color: #ffcc00;
+            text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.7);
+            letter-spacing: 1px;
+        }
+        
+        .version {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: #ff0000;
+            background: rgba(255, 204, 0, 0.1);
+            padding: 8px 15px;
+            border-radius: 8px;
+            display: inline-block;
+            border: 1px solid #ffcc00;
+        }
+        
+        .features {
+            text-align: left;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid #ff0000;
+        }
+        
+        .features h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #ffcc00;
+            text-align: center;
+        }
+        
+        .features ul {
+            list-style-type: none;
+        }
+        
+        .features li {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .features li:before {
+            content: "▶";
+            color: #ffcc00;
+            margin-right: 10px;
+        }
+        
+        .download-section {
+            margin: 30px 0;
+        }
+        
+        .download-btn {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            background: linear-gradient(45deg, #ff0000, #cc0000);
+            color: #ffcc00;
+            font-size: 2rem;
+            font-weight: bold;
+            padding: 20px 30px;
+            border: 3px solid #ffcc00;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.5);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        
+        .download-btn:hover, .download-btn:focus {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.7);
+            background: linear-gradient(45deg, #ff3333, #ff0000);
+            outline: none;
+        }
+        
+        .download-btn:active {
+            transform: scale(1.02);
+        }
+        
+        .file-info {
+            margin-top: 20px;
+            font-size: 1.3rem;
+            color: #ffcc00;
+            background: rgba(255, 0, 0, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ff0000;
+        }
+        
+        .instructions {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            border: 1px solid #ffcc00;
+        }
+        
+        .instructions h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #ffcc00;
+        }
+        
+        .instructions ol {
+            padding-left: 25px;
+        }
+        
+        .instructions li {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            color: #ff0000;
+            padding: 15px;
+            background: rgba(255, 204, 0, 0.05);
+            border-radius: 8px;
+            border: 1px solid #ffcc00;
+        }
+        
+        /* TV Remote Navigation Focus States */
+        *:focus {
+            outline: 3px solid #ffcc00;
+            outline-offset: 2px;
+        }
+        
+        /* Notification for download */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 204, 0, 0.9);
+            color: #000;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .notification.show {
+            display: block;
+            animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .download-btn { font-size: 1.5rem; padding: 15px 25px; }
+            .features li { font-size: 1.2rem; }
+            .instructions li { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT6qLFptUgGWwDVyv5eSZtp2vGFyGScVdKVJ0g8QeHu2FCKIioNZkVm3XI&s=10" alt="PikaShow Logo" class="logo">
+        </div>
+        
+        <h1>PIKASHOW</h1>
+        <p class="version">LATEST VERSION: v90.0.0.0</p>
+        
+        <div class="features">
+            <h2>✦ FEATURES ✦</h2>
+            <ul>
+                <li>Unlimited Movies & TV Shows</li>
+                <li>Live Sports Streaming</li>
+                <li>HD Quality Content</li>
+                <li>No Subscription Required</li>
+                <li>Regular Updates</li>
+            </ul>
+        </div>
+        
+        <div class="download-section">
+            <button class="download-btn" id="downloadBtn" tabindex="0">
+                DOWNLOAD NOW
+            </button>
+            
+            <div class="file-info">
+                📁 File Size: ~17 MB | 📅 Updated: June 2025
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>⚙ INSTALLATION INSTRUCTIONS</h3>
+            <ol>
+                <li>Click the Download button above</li>
+                <li>Wait for the download to complete</li>
+                <li>Go to your device Settings</li>
+                <li>Enable "Install from Unknown Sources"</li>
+                <li>Open the downloaded APK file and follow the installation prompts</li>
+            </ol>
+        </div>
+        
+        <div class="footer">
+            © free download pokashow.
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        Download Started! Check your downloads folder.
+    </div>
+    
+    <script>
+        // TV Remote Navigation Support
+        document.addEventListener('keydown', function(e) {
+            const focusableElements = 'button, [tabindex]:not([tabindex="-1"])';
+            const focusable = Array.from(document.querySelectorAll(focusableElements));
+            const currentIndex = focusable.indexOf(document.activeElement);
+            
+            switch(e.key) {
+                case 'ArrowDown':
+                case 'ArrowRight':
+                    e.preventDefault();
+                    const nextIndex = (currentIndex + 1) % focusable.length;
+                    focusable[nextIndex].focus();
+                    break;
+                case 'ArrowUp':
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    const prevIndex = (currentIndex - 1 + focusable.length) % focusable.length;
+                    focusable[prevIndex].focus();
+                    break;
+                case 'Enter':
+                case 'OK':
+                    if (document.activeElement) {
+                        document.activeElement.click();
+                    }
+                    break;
+            }
+        });
+        
+        // Download functionality
+        document.getElementById('downloadBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Create a temporary anchor element for download
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'pikashow_v90.apk';
+            downloadLink.download = 'pikashow.apk';
+            
+            // For Smart TVs that might not support direct download
+            try {
+                // Try to trigger download
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                
+                // Show notification
+                showNotification('Download Started! Check your downloads folder.');
+                
+                // Alternative method for some Smart TVs
+                setTimeout(() => {
+                    window.location.href = 'pikashow_v90.apk';
+                }, 1000);
+            } catch (error) {
+                console.error('Download error:', error);
+                showNotification('Download failed. Please try again.');
+            }
+            
+            // Change button text temporarily
+            const btn = document.getElementById('downloadBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⬇ DOWNLOADING...';
+            btn.style.background = 'linear-gradient(45deg, #ffcc00, #ff9900)';
+            btn.style.color = '#000';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = 'linear-gradient(45deg, #ff0000, #cc0000)';
+                btn.style.color = '#ffcc00';
+            }, 3000);
+        });
+        
+        // Show notification function
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Auto-focus download button for TV users
+        window.addEventListener('load', function() {
+            document.getElementById('downloadBtn').focus();
+        });
+    </script>
+</body>
+</html>
